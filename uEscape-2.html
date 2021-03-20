@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>uEscape</title>
+</head>
+
+<body>
+<h2>uEscape</h2>
+<p>转换前</p>
+<input id="upfile" name="upfile" type="file" value="载入" multiple="multiple" /><br>
+<textarea name="input0" rows="3" cols="3" style="overflow:none;width:360px;height:120px;"></textarea>
+<br>
+<input type="button" value="粘贴" onclick="document.getElementsByName('input0')[0].value=window.clipboardData.getData('text')">
+<input type="button" value="复制" onclick="window.clipboardData.setData('text',document.getElementsByName('input0')[0].value);">
+<input type="button" value="清空" onclick="document.getElementsByName('input0')[0].value=''">
+<p>转换后</p>
+<textarea name="output0" rows="3" cols="3" style="overflow:none;width:360px;height:120px;"></textarea>
+<br>
+<input type="button" value="粘贴" onclick="document.getElementsByName('output0')[0].value=window.clipboardData.getData('text')">
+<input type="button" value="复制" onclick="window.clipboardData.setData('text',document.getElementsByName('output0')[0].value);">
+<input type="button" value="清空" onclick="document.getElementsByName('output0')[0].value=''">
+<br>
+<br>
+<input type="button" value="转义字符" onclick="document.getElementsByName('output0')[0].value=uEscape.encode(document.getElementsByName('input0')[0].value)">
+<input type="button" value="恢复正常" onclick="document.getElementsByName('output0')[0].value=uEscape.decode(document.getElementsByName('input0')[0].value)">
+<input type="button" value="下载为文本" onclick="DownloadStr('save.txt',document.getElementsByName('output0')[0].value)">
+
+<br>
+<span style="color:#888888;"><font size="1">Made by func16</font></span>
+
+<script type="text/javascript">
+	
+	document.getElementById("upfile").addEventListener("change",function () {
+		var file = document.getElementById('upfile').files[0];
+		var reader = new FileReader();
+		reader.readAsText(file,'utf-8');
+ 		reader.onload = function () {
+			document.getElementsByName('input0')[0].value = reader.result;
+		}
+	});
+	//DownloadStr Function,fixed&opti by func16//
+	function DownloadStr(name, data) {
+		var urlObject = window.URL || window.webkitURL || window;
+		var export_blob = new Blob([data]);
+		var save_link = document.createElement("a")
+		save_link.href = urlObject.createObjectURL(export_blob);
+		save_link.download = name;
+		var clickEvent = document.createEvent("MouseEvents");
+		clickEvent.initEvent("click", true, true);  
+		save_link.dispatchEvent(clickEvent);
+	}
+	//uEscape Function,opti by func16//
+	function uEscape(){
+		
+		this.encode=function(input){
+			returnstr=""
+			for (i=0;i<input.length; i++) {
+				code=input.charCodeAt(i).toString(16);
+				returnstr += "\\u"+ new Array(5-String(code).length).join("0")+code;
+			}
+			return returnstr
+		}
+		this.decode=function(input){
+			return unescape(input.replace(/\\u/g, '%u'))
+		}
+	}
+	uEscape=new uEscape
+
+</script>
+
+</body>
+</html>
