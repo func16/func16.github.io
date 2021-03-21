@@ -1,28 +1,30 @@
+<!DOCTYPE html>
 <html>
 <head>
+ <meta charset="utf-8">
 <title>Base64</title>
 </head>
 
 <body>
 <h2>Base64</h2>
-<p>×ª»»Ç°</p>
-<input id="upfile" name="upfile" type="file" value="ÔØÈë" multiple="multiple" /><br>
+<p>è½¬æ¢å‰</p>
+<input id="upfile" name="upfile" type="file" value="è½½å…¥" multiple="multiple" /><br>
 <textarea name="input0" rows="3" cols="3" style="overflow:none;width:360px;height:120px;"></textarea>
 <br>
-<input type="button" value="Õ³Ìù" onclick="document.getElementsByName('input0')[0].value=window.clipboardData.getData('text')">
-<input type="button" value="¸´ÖÆ" onclick="window.clipboardData.setData('text',document.getElementsByName('input0')[0].value);">
-<input type="button" value="Çå¿Õ" onclick="document.getElementsByName('input0')[0].value=''">
-<p>×ª»»ºó</p>
+<input type="button" value="ç²˜è´´" onclick="document.getElementsByName('input0')[0].value=window.clipboardData.getData('text')">
+<input type="button" value="å¤åˆ¶" onclick="window.clipboardData.setData('text',document.getElementsByName('input0')[0].value);">
+<input type="button" value="æ¸…ç©º" onclick="document.getElementsByName('input0')[0].value=''">
+<p>è½¬æ¢å</p>
 <textarea name="output0" rows="3" cols="3" style="overflow:none;width:360px;height:120px;"></textarea>
 <br>
-<input type="button" value="Õ³Ìù" onclick="document.getElementsByName('output0')[0].value=window.clipboardData.getData('text')">
-<input type="button" value="¸´ÖÆ" onclick="window.clipboardData.setData('text',document.getElementsByName('output0')[0].value);">
-<input type="button" value="Çå¿Õ" onclick="document.getElementsByName('output0')[0].value=''">
+<input type="button" value="ç²˜è´´" onclick="document.getElementsByName('output0')[0].value=window.clipboardData.getData('text')">
+<input type="button" value="å¤åˆ¶" onclick="window.clipboardData.setData('text',document.getElementsByName('output0')[0].value);">
+<input type="button" value="æ¸…ç©º" onclick="document.getElementsByName('output0')[0].value=''">
 <br>
 <br>
-<input type="button" value="¼ÓÃÜ" onclick="document.getElementsByName('output0')[0].value=Base64.encode(document.getElementsByName('input0')[0].value)">
-<input type="button" value="½âÃÜ" onclick="document.getElementsByName('output0')[0].value=Base64.decode(document.getElementsByName('input0')[0].value)">
-<input type="button" value="ÏÂÔØÎªÎÄ±¾" onclick="DownloadStr('save.txt',document.getElementsByName('output0')[0].value)">
+<input type="button" value="åŠ å¯†" onclick="document.getElementsByName('output0')[0].value=Base64.encode(document.getElementsByName('input0')[0].value)">
+<input type="button" value="è§£å¯†" onclick="document.getElementsByName('output0')[0].value=Base64.decode(document.getElementsByName('input0')[0].value)">
+<input type="button" value="ä¸‹è½½ä¸ºæ–‡æœ¬" onclick="DownloadStr('save.txt',document.getElementsByName('output0')[0].value)">
 <br>
 <span style="color:#888888;"><font size="1">Made by func16</font></span>
 
