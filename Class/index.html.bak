@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8">
 		<script language="JavaScript">
-		if (prompt("输入密码:","") != "1007002"){
+		if (prompt("输入密码:","") != "114514"){
 			alert("密码不正确");
 			window.opener=null;
 			window.close();
