@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script language="JavaScript">
+		if (prompt("输入密码:","") != "114514"){
+			alert("密码不正确");
+			window.opener=null;
+			window.close();
+		}
+		</script>
+	</head>
+	<body>
+		<h1 style="font-family:GG">Classes:</h1>
+		<u><font style="font-family:GG" onClick="play('http://live-college.zlzgy.org.cn/ae99f7100020448bbb3b1b964a0881b2/7b282744bec0427f9fc153db3dfb0f5a-c617c20e3bffcdbfe0433e16792fb69a-ld.mp4')" color=#0033ff>1-预习原文</font></u>
+	</body>
+	<script>
+		function play(src){
+			window.open("player.html?src="+src)
+		}
+	</script>
+</html>

@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link href="video-js.css" rel="stylesheet">
+		<script src="video.js"></script>
+	</head>
+	<body>
+		<center>
+		<font size="50">Player</font>
+		
+		<video id="myVideo" class="video-js vjs-big-play-centered " data-setup='{}' controls preload="metadata" width="960" height="600">
+			<source id="source" src="" type="application/x-mpegURL"></source>
+		</video>
+		</center>
+		<script>
+		var src=window.location.href.split("=")[1]
+		
+		var myPlayer = videojs('myVideo');
+		myPlayer.src(src);
+		myPlayer.load();
+		
+		</script>
+		
+	</body>
+</html>
