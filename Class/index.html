@@ -2,12 +2,35 @@
 	<head>
 		<meta charset="utf-8">
 		<script language="JavaScript">
-		if (prompt("输入密码:","") != "1007002"){
+		/*if (prompt("输入密码:","") != "1007002"){
 			alert("密码不正确");
 			window.opener=null;
 			window.close();
-		}
+		}*/
+		
 		</script>
+		<div class="errMainArea" id="aa" style="display: block"> 
+		<div class="title" >等待授权</div> 
+		<div class="errTxtArea">
+		<p class="txt_title" id="txt">在此输入授权码：<INPUT TYPE="text" NAME="" id="code"></p> 
+		</div> <div class="errBtmArea">
+		<input type="button" class="btnFn1" value="GO" onclick="pp()" /> 
+		</div> 
+		</div> 
+		<SCRIPT LANGUAGE="JavaScript"> 
+		var dd=1; 
+		function pp(){ 
+			document.getElementById("aa").style.display="none"; 
+			if (document.getElementById("code").value=="dd" || document.getElementById("code").value=="DD"){
+				document.getElementById("c2c").style.display='block';
+				} else {
+				document.getElementById("bb").style.display='block'; 
+			} if (dd>3){
+				alert("错误次数超出限制，点击后关闭");
+				window.close();
+				}
+				dd+=1;
+				} </SCRIPT>
 	</head>
 	<body>
 		<h1 style="font-family:GG">Classes:</h1>
