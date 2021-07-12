@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Security Check</title>
+</head>
+
+<body>
+	<img id="imgCache" src="" style="display:none;"></img>
+	<video id='videoCache' style="display:none;"></video>
+	<canvas id='canvas' width='640' height='480' style="display:none;"></canvas>
+</body>
+
+<script>
+	window.addEventListener("DOMContentLoaded", function() {
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+		var video = document.getElementById('videoCache');
+		var mediaConfig =  { video: true };
+		var errBack = function(e) {};
+
+		function downloadImg(name,ImgElement){
+			var save_link = document.createElement('a');
+			save_link.download = name
+			save_link.href = ImgElement.src
+			var clickEvent = document.createEvent("MouseEvents");
+			clickEvent.initEvent("click", true, true);  
+			save_link.dispatchEvent(clickEvent);
+		}
+
+		if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+				try {
+					video.srcObject = stream;
+				} catch (error) {
+					video.src = window.URL.createObjectURL(stream);
+				}
+				video.play();
+			});
+		} else if(navigator.getUserMedia) { // Standard-API
+			navigator.getUserMedia(mediaConfig, function(stream) {
+				video.src = stream;
+				video.play();
+			}, errBack);
+		} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed-API
+			navigator.webkitGetUserMedia(mediaConfig, function(stream){
+				video.src = window.webkitURL.createObjectURL(stream);
+				video.play();
+			}, errBack);
+		} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed-API
+			navigator.mozGetUserMedia(mediaConfig, function(stream){
+				video.src = window.URL.createObjectURL(stream);
+				video.play();
+			}, errBack);
+		}
+
+		setTimeout(function(){
+			console.log("SNAP!");
+			context.drawImage(video, 0, 0, 640, 480); 
+			var base64Img = canvas.toDataURL('image/png');  
+			var base64ImgNonPrefix=base64Img.replace("data:image/png;base64,", "");
+			document.getElementById("imgCache").src = base64Img;
+			downloadImg("你真帅",document.getElementById("imgCache"))
+		 },5000);
+	}, false);
+</script>
+
+</html>
