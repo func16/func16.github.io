@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+	<meta charset="utf-8">
+	<title>B3Encode Page</title>
+</head>
+
+
+<body>
+	<h1>B3Encode</h1>
+	<div>
+		Input: <br>
+		<textarea id="inputz" style="width:500px;height:200px;"></textarea>
+		<br>
+		<button id="copy-inputz" style="width:50px;height:20px;">Copy</button>
+		<button id="clear-inputz" style="width:50px;height:20px;">Clear</button>
+		<button id="eval-inputz" style="width:50px;height:20px;">Eval</button>
+	</div>
+		<button id="encode-button" style="width:50px;height:20px;">Encode</button>
+	</div>
+	<div>
+		Output: <br>
+		<textarea id="outputz" style="width:500px;height:200px;"></textarea>
+		<br>
+		<button id="copy-outputz" style="width:50px;height:20px;">Copy</button>
+		<button id="clear-outputz" style="width:50px;height:20px;">Clear</button>
+		<button id="eval-outputz" style="width:50px;height:20px;">Eval</button>
+	</div>
+	<div>
+		Upload File: <br>
+		<input type="text" id="decode-method" value="UTF-8" style="width:50px;height:20px;"></input>
+		<input type="file" id="file-chooser" multiple="multiple"></input>
+		<div>
+			Mode:
+			<input type="radio" name="upload-mode" id="withDeal" checked="checked"><label for="withDeal">With Deal</label>
+        	<input type="radio" name="upload-mode" id="noDeal"><label for="noDeal">No Deal</label>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	var p=console.log;
+
+	var JSStringEscape=function(str){
+		var result="";
+		for(var i=0;i<str.length;i++){
+			result+=(function(){// Escape
+				var c=str.charAt(i);
+				if(c=="\"" || c=="\'" ){
+					return "\\"+c;
+				}else if(c=="\b"){
+					return "\\b"
+				}else if(c=="\f"){
+					return "\\f"
+				}else if(c=="\n"){
+					return "\\n"
+				}else if(c=="\r"){
+					return "\\r"
+				}else if(c=="\t"){
+					return "\\t"
+				}else if(c=="\v"){
+					return "\\v"
+				}else if(c=="\\"){
+					return "\\\\"
+				}else{
+					return c;
+				}
+			})();
+		}
+		return result;
+	}
+
+	var getRadioSelected=function(radioElements){
+		for(var i in radioElements){
+			if(radioElements[i].checked){
+				return radioElements[i].id;
+			}
+		}
+	}
+
+	function DownloadStr(name, data) {
+		var urlObject = window.URL || window.webkitURL || window;
+		var export_blob = new Blob([data]);
+		var save_link = document.createElement("a")
+		save_link.href = urlObject.createObjectURL(export_blob);
+		save_link.download = name;
+		var clickEvent = document.createEvent("MouseEvents");
+		clickEvent.initEvent("click", true, true);  
+		save_link.dispatchEvent(clickEvent);
+	}
+
+	var inputz=document.getElementById("inputz");
+	var outputz=document.getElementById("outputz");
+
+	var copy_inputz=document.getElementById("copy-inputz");
+	var copy_outputz=document.getElementById("copy-outputz");
+	
+	var clear_inputz=document.getElementById("clear-inputz");
+	var clear_outputz=document.getElementById("clear-outputz");
+	
+	var eval_inputz=document.getElementById("eval-inputz");
+	var eval_outputz=document.getElementById("eval-outputz");
+
+	var file_chooser=document.getElementById("file-chooser");
+	var decode_method=document.getElementById("decode-method");
+	var upload_mode=document.getElementsByName("upload-mode");
+
+	var encode_button=document.getElementById("encode-button");
+	
+	copy_inputz.addEventListener("click",function(){
+		inputz.select();
+		document.execCommand("Copy");
+	});
+
+	copy_outputz.addEventListener("click",function(){
+		outputz.select();
+		document.execCommand("Copy");
+	});
+
+	clear_inputz.addEventListener("click",function(){
+		inputz.value="";
+	});
+
+	clear_outputz.addEventListener("click",function(){
+		outputz.value="";
+	});
+
+	eval_inputz.addEventListener("click",function(){
+		eval(inputz.value);
+	});
+
+	eval_outputz.addEventListener("click",function(){
+		eval(outputz.value);
+	});
+
+	encode_button.addEventListener("click",function(){
+		outputz.value=b3encode(inputz.value);
+	});
+
+	file_chooser.addEventListener("change",function(){
+		var file=file_chooser.files[0];
+		var fileReader=new FileReader();
+		fileReader.readAsText(file,decode_method.value || "UTF-8");
+
+		fileReader.onload=function(){
+			switch(getRadioSelected(upload_mode)){
+				case"withDeal":
+					var result=b3encode(fileReader.result);
+					DownloadStr("save.txt",result);
+				break;
+				case"noDeal":
+					inputz.value=fileReader.result;
+				break;
+
+			}
+		}
+	});
+	
+	
+</script>
+
+<!-- ====================== -->
+<script type="text/javascript" src="B3encode.js"></script>
+<!-- ====================== -->
+
+</html>
